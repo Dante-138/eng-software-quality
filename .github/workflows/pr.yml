@@ -36,12 +36,15 @@ jobs:
       # PR: um PR que alterasse o script poderia mandar o secret para fora. Mudança
       # no verificador vale neste check depois do merge; antes disso, os testes de
       # unidade do Gate conferem a versão do PR.
+      # EXIGIR_TERMOS_PROIBIDOS: sem o secret (repositório novo, PR do Dependabot
+      # sem o secret de Dependabot) o check reprova em vez de passar sem conferir.
       - name: Destino do PR, mensagens de commit, título e descrição
         env:
           TITULO_PR: ${{ github.event.pull_request.title }}
           CORPO_PR: ${{ github.event.pull_request.body }}
           DESTINO_DO_PR: ${{ github.base_ref }}
           TERMOS_PROIBIDOS: ${{ secrets.TERMOS_PROIBIDOS }}
+          EXIGIR_TERMOS_PROIBIDOS: 'true'
           BASE: origin/${{ github.base_ref }}
         run: |
           git show origin/main:tools/verificar-commits.ts > "$RUNNER_TEMP/verificar-commits.ts"

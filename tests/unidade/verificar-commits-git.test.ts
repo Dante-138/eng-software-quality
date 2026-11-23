@@ -23,11 +23,17 @@ function commit(mensagem: string, autor?: string): string {
   return git('rev-parse', 'HEAD');
 }
 
-function rodar(base: string): { status: number | null; saida: string } {
+function rodar(base: string, ambiente: Record<string, string> = {}): { status: number | null; saida: string } {
   const r = spawnSync(process.execPath, [SCRIPT, base], {
     cwd: pasta,
     encoding: 'utf8',
-    env: { ...process.env, ARQUIVO_TERMOS_PROIBIDOS: join(pasta, 'nao-existe.txt') },
+    env: {
+      ...process.env,
+      ARQUIVO_TERMOS_PROIBIDOS: join(pasta, 'nao-existe.txt'),
+      TERMOS_PROIBIDOS: '',
+      EXIGIR_TERMOS_PROIBIDOS: '',
+      ...ambiente,
+    },
   });
   return { status: r.status, saida: r.stdout + r.stderr };
 }
@@ -57,4 +63,18 @@ test('a mesma mensagem com autor pessoa reprova', () => {
   const resultado = rodar(base);
   expect(resultado.status).toBe(1);
   expect(resultado.saida).toContain('coautoria');
+});
+
+test('com a lista exigida, lista vazia reprova (o CI sem o secret)', () => {
+  const base = git('rev-parse', 'HEAD');
+  commit('docs: explain the gate');
+  const resultado = rodar(base, { EXIGIR_TERMOS_PROIBIDOS: 'true' });
+  expect(resultado.status).toBe(1);
+  expect(resultado.saida).toContain('lista de termos proibidos vazia');
+});
+
+test('com a lista exigida e preenchida, o commit limpo passa', () => {
+  const base = git('rev-parse', 'HEAD');
+  commit('docs: explain the gate again');
+  expect(rodar(base, { EXIGIR_TERMOS_PROIBIDOS: 'true', TERMOS_PROIBIDOS: 'Acme' }).status).toBe(0);
 });

@@ -19,6 +19,8 @@
 //                      No CI vem de um secret, para a própria lista não ficar pública.
 //   ARQUIVO_TERMOS_PROIBIDOS  arquivo local com a mesma lista. Padrão:
 //                      ~/.config/portao-de-qualidade/termos-proibidos.txt
+//   EXIGIR_TERMOS_PROIBIDOS   "true" reprova quando a lista sai vazia. O pr.yml liga:
+//                      sem o secret, o portão passaria sem conferir nenhum termo.
 //
 // Regras:
 // 1. Assunto no padrão Conventional Commits: tipo(escopo opcional): descrição
@@ -203,6 +205,12 @@ function relatar(itens: Item[]): number {
 
 function principal(argumentos: string[]): number {
   const termos = termosConfigurados();
+  if (process.env['EXIGIR_TERMOS_PROIBIDOS'] === 'true' && termos.length === 0) {
+    console.error('REPROVADO  lista de termos proibidos vazia');
+    console.error('           - crie o secret TERMOS_PROIBIDOS em Settings > Secrets and variables,');
+    console.error('             em Actions e em Dependabot (os PRs do robô só leem os secrets de Dependabot)');
+    return 1;
+  }
   if (argumentos[0] === '--mensagem' && argumentos[1]) {
     const mensagem = limparMensagemDoEditor(readFileSync(argumentos[1], 'utf8'));
     return relatar([{ rotulo: 'mensagem do commit', problemas: problemasDaMensagem(mensagem, termos) }]);

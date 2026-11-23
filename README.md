@@ -74,7 +74,9 @@ Serve de duas formas:
    bash tools/configurar-repo.sh dono/repositorio
    ```
 
-5. Crie o secret `RELEASE_TOKEN` para a release automática ([guia 9](guias/09-releases-e-versao.md)).
+5. Crie o secret `RELEASE_TOKEN` para a release automática ([guia 9](guias/09-releases-e-versao.md))
+   e o `TERMOS_PROIBIDOS`, em Actions e em Dependabot, com os nomes que nunca podem
+   aparecer; sem ele o check "Texto do PR" reprova ([guia 6](guias/06-commits-e-prs.md)).
 6. Apague o que não usar: `receitas/` e `.github/workflows/receita-c.yml` se o projeto não
    tem C; `guias/` se quiser o repositório enxuto.
 7. Substitua o app de exemplo (`src/`, `tests/`) pelo seu, mantendo a separação entre

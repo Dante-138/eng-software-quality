@@ -59,7 +59,11 @@ Como o portão ajuda sem expor a lista:
   O hook `commit-msg` reprova o commit antes de ele existir.
 - **No CI:** o secret `TERMOS_PROIBIDOS` do repositório, com a mesma lista. O portão
   mascara cada termo no log e o aviso diz só o número do termo ("termo proibido nº 2"),
-  porque o log de repositório público é público.
+  porque o log de repositório público é público. Sem o secret, o check reprova
+  (`EXIGIR_TERMOS_PROIBIDOS` no `pr.yml`): um portão que passa sem conferir nada parece
+  verde e não protege. Os PRs do Dependabot só leem os secrets de Dependabot, então a
+  mesma lista vai nos dois lugares (Settings > Secrets and variables > Actions e
+  Dependabot).
 
 Exceção única, estreita: o Dependabot assina os commits dele com uma linha
 `Signed-off-by: dependabot[bot] <...>`. Essa linha, sozinha e inteira, passa só quando o
