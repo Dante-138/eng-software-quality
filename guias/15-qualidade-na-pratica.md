@@ -226,11 +226,14 @@ jobs:
 ```
 
 Não rodei este job. Imagens: [zephyrproject-rtos/docker-image](https://github.com/zephyrproject-rtos/docker-image).
-Para nRF Connect SDK existe a imagem `ghcr.io/nrfconnect/sdk-nrf-toolchain:<versão>`,
-usada como container do job. Um job rodando, com a imagem por digest e o workspace
-enxuto: o `ci.yml` do
-[fw-nrf52840-ble-sensor-monitor](https://github.com/Dante-138/fw-nrf52840-ble-sensor-monitor/blob/main/.github/workflows/ci.yml). O `-x` do twister e a inicialização do workspace (`west
-init`, `west update`) não foram conferidos aqui: ajuste ao seu projeto.
+Para nRF Connect SDK existe a imagem
+`ghcr.io/nrfconnect/sdk-nrf-toolchain:<versão>@sha256:<digest>`, usada como container do
+job.
+
+Um job de build rodando assim, com a imagem por digest e o workspace enxuto (`west init`
+e `west update` só com os módulos do nRF52), está no `ci.yml` do
+[fw-nrf52840-ble-sensor-monitor](https://github.com/Dante-138/fw-nrf52840-ble-sensor-monitor/blob/main/.github/workflows/ci.yml).
+O `-x` do twister do exemplo acima não foi conferido aqui: ajuste ao seu projeto.
 
 ### Firmware C com ESP-IDF
 
