@@ -1,5 +1,5 @@
 #!/bin/sh
-# Portão local antes do push: o mesmo que o CI confere primeiro (commits, lint,
+# Portão local antes do push: o mesmo que o CI confere primeiro (commits, versões, lint,
 # formato, tipos, testes de unidade e build). Ativado pelo "npm install" (script
 # "prepare"). Pular com --no-verify só em emergência: o CI confere de novo.
 set -e

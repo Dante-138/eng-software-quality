@@ -1,4 +1,4 @@
-# 16. Qualidade na prática
+# 15. Qualidade na prática
 
 Passos curtos para aplicar amanhã, com a fonte de cada um. Foco em firmware C (nRF52 com
 Zephyr, ESP32 com ESP-IDF), Linux embarcado e automação de bancada em Python.
@@ -204,7 +204,9 @@ quem decide é o sanitizer, a análise estática e o teste.
 ## Parte 3: CI para copiar
 
 Actions fixadas por commit (conferidas em 16/11/2026). Fixe também a imagem de container
-por versão e, melhor, por digest (guia 8).
+pela versão e pelo digest, `imagem:<versão>@sha256:<digest>` (guia 8). Os exemplos
+abaixo mostram `<digest>` onde ele entra; o valor sai de
+`docker buildx imagetools inspect imagem:<versão>`.
 
 ### Firmware C com Zephyr
 
@@ -213,7 +215,8 @@ jobs:
   testes:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
-    container: ghcr.io/zephyrproject-rtos/ci:v0.30.0 # use a versão que casa com o seu Zephyr
+    # use a versão que casa com o seu Zephyr
+    container: ghcr.io/zephyrproject-rtos/ci:v0.30.0@sha256:<digest>
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -224,7 +227,9 @@ jobs:
 
 Não rodei este job. Imagens: [zephyrproject-rtos/docker-image](https://github.com/zephyrproject-rtos/docker-image).
 Para nRF Connect SDK existe a imagem `ghcr.io/nrfconnect/sdk-nrf-toolchain:<versão>`,
-usada como container do job. O `-x` do twister e a inicialização do workspace (`west
+usada como container do job. Um job rodando, com a imagem por digest e o workspace
+enxuto: o `ci.yml` do
+[fw-nrf52840-ble-sensor-monitor](https://github.com/Dante-138/fw-nrf52840-ble-sensor-monitor/blob/main/.github/workflows/ci.yml). O `-x` do twister e a inicialização do workspace (`west
 init`, `west update`) não foram conferidos aqui: ajuste ao seu projeto.
 
 ### Firmware C com ESP-IDF

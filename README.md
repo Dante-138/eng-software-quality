@@ -53,8 +53,8 @@ Serve de duas formas:
 11. [Briefs para agentes](guias/11-briefs-para-agentes.md)
 12. [Checklist de revisão](guias/12-checklist-de-revisao.md)
 13. [Lições reais](guias/13-licoes.md)
-14. [Stacks padrão](guias/15-stacks-padrao.md)
-15. [Qualidade na prática](guias/16-qualidade-na-pratica.md)
+14. [Stacks padrão](guias/14-stacks-padrao.md)
+15. [Qualidade na prática](guias/15-qualidade-na-pratica.md)
 
 ## Começar um projeto novo com o template
 
@@ -84,7 +84,7 @@ Serve de duas formas:
 
 ```bash
 npm run dev                      # servidor de desenvolvimento
-npm run check                    # commits, lint, formato, tipos, unidade e build (o mesmo do pre-push)
+npm run check                    # commits, versões, lint, formato, tipos, unidade e build (o mesmo do pre-push)
 npm run test:navegador           # testes no navegador, sem a regressão visual
 npm run test:navegador:docker    # testes no navegador completos, no container do CI
 npm run test:mutacao             # teste de mutação do núcleo
