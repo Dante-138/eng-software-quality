@@ -1,4 +1,4 @@
-# 15. Stacks padrão
+# 14. Stacks padrão
 
 ## A regra
 
@@ -51,7 +51,8 @@ entra nela se for mesmo um app ou uma página.
 ## Como começar um projeto em cada uma
 
 Em todos: depois do primeiro push da `main`, rodar o `tools/configurar-repo.sh` com os
-nomes dos checks exigidos (guia 7), e copiar um `AGENTS.md` com as regras do repositório.
+nomes dos checks exigidos (guia 7), e copiar um `AGENTS.md` com as regras do repositório
+(modelo em [`AGENTS-modelo.md`](https://github.com/Dante-138/eng-ai-agent-orchestration/blob/main/modelos/AGENTS-modelo.md)).
 
 ### C, nRF52 e ESP32
 
